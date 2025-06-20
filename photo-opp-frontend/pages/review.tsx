@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function ReviewPage() {
   const router = useRouter();
@@ -10,17 +10,17 @@ export default function ReviewPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const imageData = localStorage.getItem('capturedImage');
+    const imageData = localStorage.getItem("capturedImage");
     if (imageData) {
       setCapturedImage(imageData);
-      localStorage.removeItem('capturedImage'); 
+      localStorage.removeItem("capturedImage");
     } else {
-      router.replace('/capture'); 
+      router.replace("/capture");
     }
   }, [router]);
 
   const handleRetake = () => {
-    router.push('/capture');
+    router.push("/capture");
   };
 
   const handleApprove = async () => {
@@ -30,29 +30,27 @@ export default function ReviewPage() {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/upload', { 
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ imageData: capturedImage }), 
+        body: JSON.stringify({ imageData: capturedImage }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Erro ao fazer upload da imagem.');
+        throw new Error(errorData.message || "Erro ao fazer upload da imagem.");
       }
 
       const result = await response.json();
-      console.log('Upload bem-sucedido:', result);
+      console.log("Upload bem-sucedido:", result);
 
-      
-      localStorage.setItem('finalImageUrl', result.imageUrl);
-      router.push('/final'); 
-
+      localStorage.setItem("finalImageUrl", result.imageUrl);
+      router.push("/final");
     } catch (err: any) {
-      console.error('Erro no upload:', err);
-      setError(err.message || 'Falha ao processar sua foto. Tente novamente.');
+      console.error("Erro no upload:", err);
+      setError(err.message || "Falha ao processar sua foto. Tente novamente.");
       setUploading(false);
     }
   };
@@ -84,9 +82,7 @@ export default function ReviewPage() {
           />
         </div>
 
-        {error && (
-          <p className="text-red-500 mt-4 text-center">{error}</p>
-        )}
+        {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
 
         <div className="flex space-x-4 mt-8 w-full max-w-md justify-center">
           <button
@@ -99,10 +95,14 @@ export default function ReviewPage() {
           <button
             onClick={handleApprove}
             className={`flex-1 px-8 py-4 bg-blue-600 text-white text-2xl font-semibold rounded-full shadow-lg transform transition duration-300 ease-in-out
-              ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 hover:scale-105 active:scale-95'}`}
+              ${
+                uploading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-blue-700 hover:scale-105 active:scale-95"
+              }`}
             disabled={uploading}
           >
-            {uploading ? 'Processando...' : 'Aprovar'}
+            {uploading ? "Processando..." : "Aprovar"}
           </button>
         </div>
       </div>

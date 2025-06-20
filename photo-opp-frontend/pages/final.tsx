@@ -1,26 +1,25 @@
-import { useEffect, useState } from 'react';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import QRCode from 'qrcode.react'; 
+import { useEffect, useState } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import QRCode from "qrcode.react";
 
 export default function FinalPage() {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const finalImageUrl = localStorage.getItem('finalImageUrl');
+    const finalImageUrl = localStorage.getItem("finalImageUrl");
     if (finalImageUrl) {
       setImageUrl(finalImageUrl);
     } else {
-      router.replace('/'); 
+      router.replace("/");
     }
 
-    
     const timer = setTimeout(() => {
-      router.push('/');
-    }, 15000); 
+      router.push("/");
+    }, 15000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, [router]);
 
   if (!imageUrl) {
@@ -42,12 +41,7 @@ export default function FinalPage() {
         <p className="text-xl mb-8">Escaneie o QR Code para baixar:</p>
 
         <div className="bg-white p-4 rounded-lg shadow-lg">
-          <QRCode
-            value={imageUrl} 
-            size={256} 
-            level="H" 
-            renderAs="svg" 
-          />
+          <QRCode value={imageUrl} size={256} level="H" renderAs="svg" />
         </div>
 
         <p className="text-lg mt-8 text-gray-400">
