@@ -1,13 +1,3 @@
 {
-  "type": "service_account",
-  "project_id": "photoappchallenge",
-  "private_key_id": "b543635437160040864616996066020a93221658",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC/baSup7w2thz1\npI1nQQ4Gp/gvUOLk+5WX+JlBsYEN1J3cYBcy68PI5+wHpCea3CuQ0Izb7sJtRYwj\ngmV+3nC6MCQ96r/2hZHZjUTZk4TRWcS2u5kUExjasmh4TQuT7KRK8oo835KLdgHV\nbavTUdWHTvHT71uwfKXOv6q6yFtiYPwp6O+ch2dYovftQ5ms6gbfoGaXL5G0JNyj\nsQGAz5Kt4fk+DzV+/xDq9ZRxWF/KannJbEdYsGo+4OAkHT/DoK2HqOMC9bAQPCDK\nFYcfQm3hhI5O5DBWVlbfAaP3ZWFZN9czYEdgUz7GcoCUvawS2ONcp41i77K5p5p4\nphK6XKztAgMBAAECggEAFGpPvdtgVJVne+sTXt0D70HKqNZ/htwt6rSLOQOtN8Ri\ncYuYmHL8a64QRgsDuPLyJ9JAs36Vzaw1Hd8Hjq2PvXY/keWPQ231+Ar7j24Ozs+R\nYyDur8K5oS6Vuv68gAd6Hg7FH2jYlXb9tb1UgzJJticn3epmZOlmOtPGFCrPVCvE\ndldVqLFDnwLGwnt6I9DGsl+94Mw3A3pWlh5/y+FBeuIG/SIN25ko7DUutB1fCjRz\n6/sSABp8dpBNLZQukIH7zI67476Hjrlch1XQrM54K9A4g8Jg+qKDTNysU+3q680s\nDiAtUGxGSbkAvPMLIFHh55g56fbJ1bVYnTb8PeI3IQKBgQDm28VrjPHCybW+I5ff\nozJGqED+DZfuEk/ggG8g+cMYXA50u4fm5MkdcWY/fP2JKDr1nI4fWEvfMVWbXHct\nMg5L+F6j6Y9reLLH0mPNdv5tAZalygpYoHwaxyAWSBphr4kh2Fxxd5decEGC1pSS\nlFJWG579BxqsSX16Ty5neVmOYwKBgQDURpOYYDQz7oJbGM0oJBSLppTTeCFEUJ3S\nai0/Ls/SdtA50jDz2lHqStgWyYXL57LCYHnSnfhAloB8POdch8jShdIXvnmueNVp\nveJEpajpi4abgTqPcb6SQ3GsuPpc+ZNEhT/5PqCsQLq3l1f6zKz0DJpVesTFIDNe\nSSDI3aNQbwKBgQC12yYXZP4FfbQnRg6bYwl105DvEHJAXjiCF2pzRYzEIbBZkGis\nIEm1YeEz3hgy9XgMhvkGBB4wgcJ4EkznU2kju1GCObh65qee9UMdVcFyyS+NBi1E\nR5e72GSUaNQvY4HZIYEg+R5KjI9uq+550VFS94s0s2X1lia8NKfPZy5/FQKBgB5j\ndCGuNArzLAoqhMQoViCf2lJjsi97cvx6YrvW0b2JcMm2Q3fFW1C1IjYw50yHgNm+\nwfHa1303jnE6rsxaS++HZMotZHILrlGS819sb7/vT3fXijCa0fNSYGWfnYfN2r1G\nbiAaTRobsh8yNVAcGO5fF4EBMEYgE/p9cYoP4J9VAoGAGElFqmajY4BrBRJ+MNQ0\np7wBdTYT5oqHgm5kU3DvriWfw0Eyqj04PEKYthNmUgQmK3zksNoO+nQkVdd33f6y\nm7q/gNJE5Lv5W3leJwzjtFYiH1ZdhYIWi/9XH0fqLA0y0sfL57/S2qXZst6QI2O/\nBT6z0GgWofUxTcCtYNWD4pA=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-fbsvc@photoappchallenge.iam.gserviceaccount.com",
-  "client_id": "109415256564472280235",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40photoappchallenge.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
+ 
 }
