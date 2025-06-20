@@ -1,31 +1,32 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import QRCode from "qrcode.react";
 
 export default function FinalPage() {
   const router = useRouter();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [finalImageUrl, setFinalImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const finalImageUrl = localStorage.getItem("finalImageUrl");
-    if (finalImageUrl) {
-      setImageUrl(finalImageUrl);
+    const storedImageUrl = localStorage.getItem("finalImageUrl");
+    if (storedImageUrl) {
+      setFinalImageUrl(storedImageUrl);
     } else {
       router.replace("/");
     }
 
-    const timer = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       router.push("/");
     }, 15000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timeoutId);
   }, [router]);
 
-  if (!imageUrl) {
+  if (!finalImageUrl) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-        <p>Carregando...</p>
+        <p>Carregando foto final...</p>
       </div>
     );
   }
@@ -33,20 +34,40 @@ export default function FinalPage() {
   return (
     <>
       <Head>
-        <title>Photo Opp - Download</title>
-        <meta name="description" content="Baixe sua foto!" />
+        <title>Photo Opp - Foto Final</title>
+        <meta name="description" content="Sua foto está pronta!" />
       </Head>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4 text-center">
-        <h1 className="text-4xl font-bold mb-8">Sua foto está pronta!</h1>
-        <p className="text-xl mb-8">Escaneie o QR Code para baixar:</p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+        <h1 className="text-4xl font-bold mb-6 text-center">
+          Sua Foto Está Pronta!
+        </h1>
 
-        <div className="bg-white p-4 rounded-lg shadow-lg">
-          <QRCode value={imageUrl} size={256} level="H" renderAs="svg" />
+        <div className="relative w-full max-w-md h-[calc(100vh-220px)] md:h-[600px] bg-gray-800 rounded-lg shadow-xl overflow-hidden flex items-center justify-center mb-6">
+          <Image
+            src={finalImageUrl}
+            alt="Foto Final"
+            layout="fill"
+            objectFit="contain"
+            className="rounded-lg"
+          />
         </div>
 
-        <p className="text-lg mt-8 text-gray-400">
-          Redirecionando para a tela inicial em breve...
-        </p>
+        <p className="text-xl mb-4">Escaneie o QR Code para baixar:</p>
+        <div className="bg-white p-4 rounded-lg shadow-lg">
+          <QRCode
+            value={finalImageUrl}
+            size={256}
+            level="H"
+            includeMargin={false}
+          />
+        </div>
+
+        <button
+          onClick={() => router.push("/")}
+          className="mt-8 px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white text-2xl font-semibold rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+        >
+          Voltar ao Início
+        </button>
       </div>
     </>
   );
