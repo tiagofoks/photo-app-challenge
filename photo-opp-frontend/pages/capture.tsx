@@ -11,9 +11,9 @@ export default function CapturePage() {
   const [countdown, setCountdown] = useState<number | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
 
-  // Define a largura e altura alvo para o Canvas (proporção 9:16)
-  const TARGET_WIDTH = 540; // Ex: 1080 / 2
-  const TARGET_HEIGHT = 960; // Ex: 1920 / 2
+  
+  const TARGET_WIDTH = 540; 
+  const TARGET_HEIGHT = 960; 
 
   const handleStreamReady = (stream: MediaStream) => {
     if (videoRef.current) {
@@ -32,7 +32,7 @@ export default function CapturePage() {
   const startCountdown = () => {
     if (!cameraReady || isCapturing) return;
 
-    setIsCapturing(true); // Bloqueia novos cliques durante a captura
+    setIsCapturing(true); 
     setCountdown(3);
 
     let currentCount = 3;
@@ -65,61 +65,61 @@ export default function CapturePage() {
       return;
     }
 
-    // Define as dimensões do canvas para a proporção alvo 9:16
+    
     canvas.width = TARGET_WIDTH;
     canvas.height = TARGET_HEIGHT;
 
-    // Calcula a proporção de aspecto do vídeo
+    
     const videoAspectRatio = video.videoWidth / video.videoHeight;
     const targetAspectRatio = TARGET_WIDTH / TARGET_HEIGHT;
 
-    let sx, sy, sWidth, sHeight; // Source X, Y, Width, Height (do vídeo)
-    let dx, dy, dWidth, dHeight; // Destination X, Y, Width, Height (no canvas)
+    let sx, sy, sWidth, sHeight; 
+    let dx, dy, dWidth, dHeight; 
 
     dx = dy = 0;
     dWidth = TARGET_WIDTH;
     dHeight = TARGET_HEIGHT;
 
-    // Determina como cortar/ajustar a imagem do vídeo para caber na proporção 9:16 do canvas
+    
     if (videoAspectRatio > targetAspectRatio) {
-      // O vídeo é mais largo que o target (landscape em relação ao portrait 9:16)
+      
       sHeight = video.videoHeight;
       sWidth = sHeight * targetAspectRatio;
       sx = (video.videoWidth - sWidth) / 2;
       sy = 0;
     } else {
-      // O vídeo é mais alto que o target (portrait em relação ao portrait 9:16)
+      
       sWidth = video.videoWidth;
       sHeight = sWidth / targetAspectRatio;
       sx = 0;
       sy = (video.videoHeight - sHeight) / 2;
     }
 
-    // Desenha o frame do vídeo no canvas
+    
     context.drawImage(video, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-    // Carrega a imagem da moldura
+    
     const frameImage = new Image();
-    frameImage.src = '/frames/frame.png'; // Caminho para a moldura na pasta public
+    frameImage.src = '/frames/frame.png'; 
 
     frameImage.onload = () => {
-      // Desenha a moldura por cima da imagem capturada
+      
       context.drawImage(frameImage, 0, 0, canvas.width, canvas.height);
 
-      // Converte o canvas para Data URL (Base64)
-      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9); // Qualidade 90% para JPEG
+      
+      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9); 
 
-      // Armazena no localStorage para a próxima tela
+      
       localStorage.setItem('capturedImage', imageDataUrl);
 
-      // Navega para a tela de revisão
+      
       router.push('/review');
-      setIsCapturing(false); // Libera o botão
+      setIsCapturing(false); 
     };
 
     frameImage.onerror = () => {
       console.error('Erro ao carregar a imagem da moldura. Certifique-se de que "public/frames/frame.png" existe.');
-      // Se a moldura falhar, ainda podemos navegar com a foto sem moldura
+      
       const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
       localStorage.setItem('capturedImage', imageDataUrl);
       router.push('/review');

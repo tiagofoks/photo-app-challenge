@@ -9,7 +9,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler", // <-- Use "bundler" para Next.js 13+ com Turbopack
+    "moduleResolution": "bundler", 
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -19,10 +19,10 @@
         "name": "next"
       }
     ],
-    // Adicione ou verifique esta seção paths
+    
     "paths": {
-      "@/*": ["./*"] // Mapeia "@" para a raiz do seu projeto frontend
-      // Se seus estilos estivessem em `frontend/src/styles`, seria "./src/*"
+      "@/*": ["./*"] 
+      
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

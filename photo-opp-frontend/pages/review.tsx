@@ -6,28 +6,55 @@ import { useRouter } from 'next/router';
 export default function ReviewPage() {
   const router = useRouter();
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Recupera a imagem do localStorage
     const imageData = localStorage.getItem('capturedImage');
     if (imageData) {
       setCapturedImage(imageData);
+      localStorage.removeItem('capturedImage'); 
     } else {
-      // Se não houver imagem, redireciona de volta para a captura
-      router.replace('/capture');
+      router.replace('/capture'); 
     }
   }, [router]);
 
   const handleRetake = () => {
-    localStorage.removeItem('capturedImage'); // Limpa a imagem anterior
-    router.push('/capture'); // Volta para a tela de captura
+    router.push('/capture');
   };
 
-  const handleApprove = () => {
-    // TODO: Enviar a imagem para o backend para upload e gerar QR Code
-    alert("Foto Aprovada! Próximo passo: Upload para o servidor e geração do QR Code.");
-    // Exemplo de navegação para a tela final (QR Code)
-    // router.push('/final');
+  const handleApprove = async () => {
+    if (!capturedImage) return;
+
+    setUploading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/upload', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageData: capturedImage }), 
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Erro ao fazer upload da imagem.');
+      }
+
+      const result = await response.json();
+      console.log('Upload bem-sucedido:', result);
+
+      
+      localStorage.setItem('finalImageUrl', result.imageUrl);
+      router.push('/final'); 
+
+    } catch (err: any) {
+      console.error('Erro no upload:', err);
+      setError(err.message || 'Falha ao processar sua foto. Tente novamente.');
+      setUploading(false);
+    }
   };
 
   if (!capturedImage) {
@@ -52,23 +79,30 @@ export default function ReviewPage() {
             src={capturedImage}
             alt="Foto Capturada"
             layout="fill"
-            objectFit="contain" // ou 'cover' dependendo de como a moldura se comporta
+            objectFit="contain"
             className="rounded-lg"
           />
         </div>
+
+        {error && (
+          <p className="text-red-500 mt-4 text-center">{error}</p>
+        )}
 
         <div className="flex space-x-4 mt-8 w-full max-w-md justify-center">
           <button
             onClick={handleRetake}
             className="flex-1 px-8 py-4 bg-red-600 hover:bg-red-700 text-white text-2xl font-semibold rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+            disabled={uploading}
           >
             Refazer
           </button>
           <button
             onClick={handleApprove}
-            className="flex-1 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-2xl font-semibold rounded-full shadow-lg transform transition duration-300 ease-in-out hover:scale-105 active:scale-95"
+            className={`flex-1 px-8 py-4 bg-blue-600 text-white text-2xl font-semibold rounded-full shadow-lg transform transition duration-300 ease-in-out
+              ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700 hover:scale-105 active:scale-95'}`}
+            disabled={uploading}
           >
-            Aprovar
+            {uploading ? 'Processando...' : 'Aprovar'}
           </button>
         </div>
       </div>

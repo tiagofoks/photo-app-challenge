@@ -3,15 +3,15 @@ import React, { useRef, useEffect, useState, RefObject } from 'react';
 interface CameraFeedProps {
   onStreamReady?: (stream: MediaStream) => void;
   onCameraError?: (error: string) => void;
-  onVideoRef?: RefObject<HTMLVideoElement>; // Nova prop para passar a ref do vídeo
+  onVideoRef?: RefObject<HTMLVideoElement>; 
 }
 
 const CameraFeed: React.FC<CameraFeedProps> = ({ onStreamReady, onCameraError, onVideoRef }) => {
-  const localVideoRef = useRef<HTMLVideoElement>(null); // Ref interna do componente
+  const localVideoRef = useRef<HTMLVideoElement>(null); 
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Usa a ref passada por prop se existir, caso contrário, usa a ref local
+  
   const videoElementRef = onVideoRef || localVideoRef;
 
   useEffect(() => {
@@ -50,14 +50,14 @@ const CameraFeed: React.FC<CameraFeedProps> = ({ onStreamReady, onCameraError, o
 
     startCamera();
 
-    // Limpeza ao desmontar o componente
+    
     return () => {
       if (videoElementRef.current && videoElementRef.current.srcObject) {
         const stream = videoElementRef.current.srcObject as MediaStream;
         stream.getTracks().forEach(track => track.stop());
       }
     };
-  }, [onStreamReady, onCameraError, videoElementRef]); // Adicionado videoElementRef nas dependências
+  }, [onStreamReady, onCameraError, videoElementRef]); 
 
   if (loading) {
     return (
@@ -79,7 +79,7 @@ const CameraFeed: React.FC<CameraFeedProps> = ({ onStreamReady, onCameraError, o
 
   return (
     <video
-      ref={videoElementRef} // Usa a ref passada ou a local
+      ref={videoElementRef} 
       className="w-full h-full object-cover rounded-lg"
       autoPlay
       playsInline
